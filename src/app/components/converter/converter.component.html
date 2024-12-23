@@ -1,0 +1,46 @@
+<!-- converter.component.html -->
+<div class="converter-container">
+  <div class="converter-form">
+    <input
+      type="number"
+      [(ngModel)]="amount"
+      placeholder="Montant"
+      class="amount-input">
+
+    <div class="currency-selectors">
+      <select [(ngModel)]="fromCurrency">
+        <option *ngFor="let currency of currencies" [value]="currency">
+          {{currency}}
+        </option>
+      </select>
+
+      <button (click)="switchCurrencies()" class="switch-btn">⇄</button>
+
+      <select [(ngModel)]="toCurrency">
+        <option *ngFor="let currency of currencies" [value]="currency">
+          {{currency}}
+        </option>
+      </select>
+    </div>
+
+    <button (click)="convertCurrency()" class="convert-btn">
+      Convertir
+    </button>
+  </div>
+
+  <div class="result-container" *ngIf="result">
+    <h3>Résultat :</h3>
+    <p>{{amount}} {{fromCurrency}} = {{result | number:'1.2-2'}} {{toCurrency}}</p>
+  </div>
+
+  <div class="history-container" *ngIf="conversionHistory.length > 0">
+    <h3>Historique des conversions</h3>
+    <div class="history-item" *ngFor="let conversion of conversionHistory">
+      <p>
+        {{conversion.fromAmount}} {{conversion.fromCurrency}} →
+        {{conversion.toAmount | number:'1.2-2'}} {{conversion.toCurrency}}
+      </p>
+      <small>{{conversion.date | date:'short'}}</small>
+    </div>
+  </div>
+</div>
